@@ -1,0 +1,1 @@
+change the env.contractName in the near.js file found on line 15 (from the tutorial code block), to nearEnv
