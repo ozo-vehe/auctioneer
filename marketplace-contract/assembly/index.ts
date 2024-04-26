@@ -74,7 +74,7 @@
 // }
 
 import { Product, productsStorage } from "./model";
-import { context, ContractPromiseBatch, u128 } from "near-sdk-as";
+import { context } from "near-sdk-as";
 
 /**
  *
@@ -101,6 +101,11 @@ export function placeBid(productId: string): void {
   product.incrementSoldAmount();
   if(product.bids.indexOf(context.attachedDeposit) > -1) {
     const index = product.bids.indexOf(context.attachedDeposit);
+    
+    if(product.bids[index] >= context.attachedDeposit) {
+      throw new Error("Bid amount should be higher than the current bid");
+    }
+
     product.bids[index] = context.attachedDeposit;
   } else {
     product.addBidders(context.sender);
@@ -135,8 +140,22 @@ export function getProduct(id: string): Product | null {
  *
  * A function that returns an array of products for all accounts
  *
- * @returns an array of objects that represent a product
  */
 export function getProducts(): Array<Product> {
   return productsStorage.values();
+}
+
+/**
+ *
+ * A function to withdraw the highest bid.
+ *
+ * @returns an array of objects that represent a product
+ */
+export function withdrawBid(id: string): void {
+  const product = getProduct(id);
+  if (product == null) {
+    throw new Error("Product not found");
+  }
+  product.withdrawBid();
+  productsStorage.set(product.id, product);
 }

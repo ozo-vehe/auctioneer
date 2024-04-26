@@ -120,6 +120,10 @@ export class Product {
     this.bidders.push(bidder);
   }
   public addBids(bid: u128): void {
+    if(bid <= this.bid) {
+      throw new Error("Bid amount is higher than the current bid");
+    }
+    this.bid = bid;
     this.bids.push(bid);
   }
   public withdrawBid(): void {
