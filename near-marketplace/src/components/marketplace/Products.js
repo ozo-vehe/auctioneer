@@ -7,8 +7,9 @@ import { Row } from "react-bootstrap";
 // import { NotificationSuccess, NotificationError } from "../utils/Notifications";
 import {
   getProducts as getProductList,
-  buyProduct,
+  placeBid,
   createProduct,
+  withdrawBid,
 } from "../../utils/marketplace";
 
 const Products = () => {
@@ -27,6 +28,7 @@ const Products = () => {
   }, []);
 
   const addProduct = async (data) => {
+    console.log(data);
     try {
       setLoading(true);
       createProduct(data).then((resp) => {
@@ -41,11 +43,24 @@ const Products = () => {
     }
   };
 
-  const buy = async (id, price) => {
+  const bid = async (id, price) => {
     try {
-      await buyProduct({
+      await placeBid({
         id,
         price,
+      }).then((resp) => getProducts());
+      // toast(<NotificationSuccess text="Product bought successfully" />);
+    } catch (error) {
+      // toast(<NotificationError text="Failed to purchase product." />);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const withdraw = async (id) => {
+    try {
+      await withdrawBid({
+        id,
       }).then((resp) => getProducts());
       // toast(<NotificationSuccess text="Product bought successfully" />);
     } catch (error) {
@@ -73,7 +88,8 @@ const Products = () => {
                 product={{
                   ..._product,
                 }}
-                buy={buy}
+                bid={bid}
+                withdraw={withdraw}
               />
             ))}
           </Row>

@@ -6,9 +6,9 @@ const AddProduct = ({ save }) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState("");
+  const [duration, setLDuration] = useState("");
   const [price, setPrice] = useState(0);
-  const isFormFilled = () => name && image && description && location && price;
+  const isFormFilled = () => name && image && description && duration && price;
 
   const [show, setShow] = useState(false);
 
@@ -72,15 +72,15 @@ const AddProduct = ({ save }) => {
               />
             </FloatingLabel>
             <FloatingLabel
-              controlId="inputLocation"
-              label="Location"
+              controlId="inputDuration"
+              label="Duration (in minutes)"
               className="mb-3"
             >
               <Form.Control
                 type="text"
-                placeholder="Location"
+                placeholder="Duration"
                 onChange={(e) => {
-                  setLocation(e.target.value);
+                  setLDuration(e.target.value);
                 }}
               />
             </FloatingLabel>
@@ -111,8 +111,9 @@ const AddProduct = ({ save }) => {
                 name,
                 image,
                 description,
-                location,
+                duration,
                 price,
+                created: (Date.now()).toString()
               });
               handleClose();
             }}
