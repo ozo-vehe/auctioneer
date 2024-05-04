@@ -14,10 +14,14 @@ export function getProducts() {
 }
 
 export async function placeBid({ id, price }) {
-  await window.contract.placeBid({ productId: id }, GAS, price);
+  console.log("Placing bid on marketplace.js...")
+  // console.log(window.contract)
+  const nearPrice = parseNearAmount(price + "");
+  // console.log(nearPrice)
+  await window.contract.placeBid({ productId: id }, GAS, nearPrice);
 }
 
 export async function withdrawBid({ id }) {
-  // await window.contract.withdrawBid({ productId: id }, GAS);
+  await window.contract.withdrawBid({ id }, GAS);
   console.log("Withdraw bid...")
 }

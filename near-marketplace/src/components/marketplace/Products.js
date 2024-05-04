@@ -4,7 +4,7 @@ import AddProduct from "./AddProduct";
 import Product from "./Product";
 import Loader from "../utils/Loader";
 import { Row } from "react-bootstrap";
-// import { NotificationSuccess, NotificationError } from "../utils/Notifications";
+import { NotificationSuccess, NotificationError } from "../utils/Notifications";
 import {
   getProducts as getProductList,
   placeBid,
@@ -34,24 +34,26 @@ const Products = () => {
       createProduct(data).then((resp) => {
         getProducts();
       });
-      // toast(<NotificationSuccess text="Product added successfully." />);
+      // <NotificationSuccess text="Product added successfully." />;
     } catch (error) {
       console.log({ error });
-      // toast(<NotificationError text="Failed to create a product." />);
+      // <NotificationError text="Failed to create a product." />;
     } finally {
       setLoading(false);
     }
   };
 
   const bid = async (id, price) => {
+    console.log("Placing bid...")
     try {
       await placeBid({
         id,
         price,
       }).then((resp) => getProducts());
-      // toast(<NotificationSuccess text="Product bought successfully" />);
+      console.log("Bid placed successfully")
+      // <NotificationSuccess text="Product bought successfully" />;
     } catch (error) {
-      // toast(<NotificationError text="Failed to purchase product." />);
+      // <NotificationError text="Failed to purchase product." />;
     } finally {
       setLoading(false);
     }
@@ -62,9 +64,9 @@ const Products = () => {
       await withdrawBid({
         id,
       }).then((resp) => getProducts());
-      // toast(<NotificationSuccess text="Product bought successfully" />);
+      // <NotificationSuccess text="Product bought successfully" />;
     } catch (error) {
-      // toast(<NotificationError text="Failed to purchase product." />);
+      // <NotificationError text="Failed to purchase product." />;
     } finally {
       setLoading(false);
     }

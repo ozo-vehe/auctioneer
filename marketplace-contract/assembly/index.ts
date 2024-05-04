@@ -1,11 +1,6 @@
 import { Product, productsStorage } from "./model";
 import { context, u128 } from "near-sdk-as";
 
-interface BiddersBid {
-  bidder: string;
-  bid: u128;
-}
-
 /**
  *
  * This function changes the state of data in the blockchain.
@@ -15,8 +10,6 @@ interface BiddersBid {
  */
 export function placeBid(productId: string): void {
   const product = getProduct(productId);
-  // const sender = context.sender;
-  // const attachedDeposit = context.attachedDeposit;
   if (product == null) {
     throw new Error("product not found");
   }
@@ -28,7 +21,7 @@ export function placeBid(productId: string): void {
   // Add or update the bid
   if (product.bidders.includes(context.sender)) {
     const index = product.bidders.indexOf(context.sender);
-    if(product.bids[index] >= context.attachedDeposit) {
+    if (product.bids[index] >= context.attachedDeposit) {
       throw new Error("Bid amount should be higher than the current bid");
     }
 
@@ -37,6 +30,10 @@ export function placeBid(productId: string): void {
     product.addBidders(context.sender);
     product.addBids(context.attachedDeposit);
   }
+  
+  product.bidder = context.sender;
+  product.price = context.attachedDeposit; // Update the price
+  productsStorage.set(productId, product);
 }
 
 /**
@@ -82,18 +79,24 @@ export function withdrawBid(id: string): void {
   if (product == null) {
     throw new Error("Product not found");
   }
-  if (!product.sold) {
-    throw new Error("The auction is still active");
+  const end = (product.created + (U64.parseInt(product.duration) * 60000));
+  const x = (product.created + U64.parseInt(product.duration))
+  const now = U64.parseInt((context.blockTimestamp).toString().slice(0, 13))
+  // const time = end - now;
+  const hasEnded = now > end;
+
+  if (hasEnded) {
+    product.withdrawBid();
+    productsStorage.set(product.id, product);
+  } else {
+    throw new Error(`The auction is still active`);
   }
-  product.withdrawBid();
-  productsStorage.set(product.id, product);
 }
 
-
 /**
- * 
+ *
  * A function to get the highest bid
- * 
+ *
  * @param id - an identifier of a product to be returned
  */
 export function getHighestBid(id: string): u128 {
@@ -105,9 +108,9 @@ export function getHighestBid(id: string): u128 {
 }
 
 /**
- * 
+ *
  * A function to get the highest bidder
- * 
+ *
  * @param id - an identifier of a product to be returned
  */
 export function getHighestBidder(id: string): string {
@@ -117,21 +120,3 @@ export function getHighestBidder(id: string): string {
   }
   return product.bidder;
 }
-
-/**
- * 
- * A function to get the list of bidders and match them with their bids
- * 
- * @param id - an identifier of a product to be returned
- */
-// export function getBidders(id: string): Array<BiddersBid> {
-//   const product = getProduct(id);
-//   const biddersBid: Array<BiddersBid> = [];
-//   if (product == null) {
-//     throw new Error("Product not found");
-//   }
-//   for (let i = 0; i < product.bidders.length; i++) {
-//     biddersBid.push({ bidder: product.bidders[i], bid: product.bids[i] });
-//   }
-//   return biddersBid;
-// }

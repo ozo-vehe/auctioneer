@@ -34,7 +34,7 @@ export class Product {
   }
   public addBids(bid: u128): void {
     if(bid <= this.bid) {
-      throw new Error("Bid amount is higher than the current bid");
+      throw new Error("Bid amount must be higher than the current bid");
     }
     this.bid = bid;
     this.bids.push(bid);

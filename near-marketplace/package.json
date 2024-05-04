@@ -1,5 +1,5 @@
 {
-  "homepage": "https://ozo-vehe.github.io/near-marketplace",
+  "homepage": "https://ozo-vehe.github.io/auctioneer",
   "name": "near-marketplace",
   "version": "0.1.0",
   "private": true,
@@ -14,6 +14,7 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-scripts": "4.0.3",
+    "react-toastify": "^10.0.5",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -23,7 +24,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"  
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -42,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-toastify": "^4.1.0"
   }
 }
