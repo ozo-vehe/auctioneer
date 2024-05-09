@@ -11,11 +11,9 @@ import Profile from "./components/marketplace/Profile";
 
 const App = function AppWrapper() {
   const [profile, setProfile] = useState(false);
+  const [home, setHome] = useState(true);
   // let account = useRef(window.walletConnection.account());
   const account = useRef(window.walletConnection.account());
-
-  // Change profile variable state
-  const changeProfile = () => setProfile(!profile);
 
   const [balance, setBalance] = useState("0");
   const getBalance = useCallback(async () => {
@@ -46,7 +44,10 @@ const App = function AppWrapper() {
           <Nav className="justify-content-end align-items-center gap-4 pt-3 pb-5">
             <Nav.Item>
               <button
-                onClick={changeProfile}
+                onClick={() => {
+                  setProfile(false);
+                  setHome(true);
+                }}
                 type="button"
                 className="border px-3 py-1 rounded-pill btn btn-outline-dark"
               >
@@ -55,7 +56,10 @@ const App = function AppWrapper() {
             </Nav.Item>
             <Nav.Item>
               <button
-                onClick={changeProfile}
+                onClick={() => {
+                  setProfile(true);
+                  setHome(false);
+                }}
                 type="button"
                 className="border px-3 py-1 rounded-pill btn btn-outline-dark"
               >
@@ -71,7 +75,10 @@ const App = function AppWrapper() {
               />
             </Nav.Item>
           </Nav>
-          <main>{profile ? <Profile user={account.current.accountId} /> : <Products />}</main>
+          <main>
+            {profile && <Profile user={account.current.accountId} />}
+            {home && <Products />}
+          </main>
         </Container>
       ) : (
         <Cover name="Street Food" login={login} coverImg={coverImg} />
