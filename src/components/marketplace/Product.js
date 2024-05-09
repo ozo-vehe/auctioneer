@@ -19,8 +19,8 @@ const Product = ({ product, bid, withdraw }) => {
   };
 
   const bidButton = () => {
-    if(isOwner) {
-      if(sold || isEnded) {
+    if (isOwner) {
+      if (isEnded && !sold) {
         return (
           <Button
             variant="outline-dark"
@@ -32,13 +32,11 @@ const Product = ({ product, bid, withdraw }) => {
         );
       }
     } else if (!isOwner) {
-      if(!isEnded) {
-        return (
-          <BidModal bid={bid} product={product} />
-        );
+      if (!isEnded) {
+        return <BidModal bid={bid} product={product} />;
       }
     }
-  }
+  };
 
   return (
     <Col key={id}>
@@ -54,7 +52,10 @@ const Product = ({ product, bid, withdraw }) => {
             {!sold && (
               <div className="w-100 d-flex flex-wrap justify-content-between">
                 <span className="font-monospace text-secondary">
-                  Highest bid: {product.bid ? `${utils.format.formatNearAmount(product.bid)} NEAR` : 0}
+                  Highest bid:{" "}
+                  {product.bid
+                    ? `${utils.format.formatNearAmount(product.bid)} NEAR`
+                    : 0}
                 </span>
                 <span className="font-monospace text-secondary">
                   {isEnded ? "Bid ended" : `Time left: ${time} minutues`}
@@ -69,7 +70,7 @@ const Product = ({ product, bid, withdraw }) => {
         <Card.Body className="d-flex  flex-column text-center">
           <Card.Title>{name}</Card.Title>
           <Card.Text className="flex-grow-1 ">{description}</Card.Text>
-            {bidButton()}
+          {bidButton()}
         </Card.Body>
       </Card>
     </Col>
@@ -78,7 +79,6 @@ const Product = ({ product, bid, withdraw }) => {
 
 Product.propTypes = {
   product: PropTypes.instanceOf(Object).isRequired,
-  bid: PropTypes.func.isRequired,
 };
 
 export default Product;
