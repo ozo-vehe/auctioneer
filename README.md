@@ -7,5 +7,5 @@ A simple auction marketplace built on the near protocol which enables users to p
 - Withdraw the highest bid at the end of the auction
 - Transfer ownership to the highest bidder
 
-URL: https://icb-faucet-dapp.vercel.app/
+URL: https://ozo-vehe.github.io/auctioneer/
 
