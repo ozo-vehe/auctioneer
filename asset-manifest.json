@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/auctioneer/static/css/main.518ce94c.chunk.css",
+    "main.js": "/auctioneer/static/js/main.ab03aa3a.chunk.js",
+    "main.js.map": "/auctioneer/static/js/main.ab03aa3a.chunk.js.map",
+    "runtime-main.js": "/auctioneer/static/js/runtime-main.868c67cb.js",
+    "runtime-main.js.map": "/auctioneer/static/js/runtime-main.868c67cb.js.map",
+    "static/css/2.658a8648.chunk.css": "/auctioneer/static/css/2.658a8648.chunk.css",
+    "static/js/2.7f12abe8.chunk.js": "/auctioneer/static/js/2.7f12abe8.chunk.js",
+    "static/js/2.7f12abe8.chunk.js.map": "/auctioneer/static/js/2.7f12abe8.chunk.js.map",
+    "static/js/3.a5ed5e88.chunk.js": "/auctioneer/static/js/3.a5ed5e88.chunk.js",
+    "static/js/3.a5ed5e88.chunk.js.map": "/auctioneer/static/js/3.a5ed5e88.chunk.js.map",
+    "index.html": "/auctioneer/index.html",
+    "static/css/2.658a8648.chunk.css.map": "/auctioneer/static/css/2.658a8648.chunk.css.map",
+    "static/css/main.518ce94c.chunk.css.map": "/auctioneer/static/css/main.518ce94c.chunk.css.map",
+    "static/js/2.7f12abe8.chunk.js.LICENSE.txt": "/auctioneer/static/js/2.7f12abe8.chunk.js.LICENSE.txt",
+    "static/media/bootstrap-icons.css": "/auctioneer/static/media/bootstrap-icons.b7bcc075.woff2",
+    "static/media/sandwich.2d312449.jpg": "/auctioneer/static/media/sandwich.2d312449.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.868c67cb.js",
+    "static/css/2.658a8648.chunk.css",
+    "static/js/2.7f12abe8.chunk.js",
+    "static/css/main.518ce94c.chunk.css",
+    "static/js/main.ab03aa3a.chunk.js"
+  ]
+}
