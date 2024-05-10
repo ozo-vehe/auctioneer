@@ -95,16 +95,16 @@ export function withdrawBid(id: string): void {
 
 /**
  *
- * A function to get the highest bid
+ * A function to get all bids
  *
  * @param id - an identifier of a product to be returned
  */
-export function getHighestBid(id: string): u128 {
+export function getHighestBid(id: string): Array<u128> {
   const product = getProduct(id);
   if (product == null) {
     throw new Error("Product not found");
   }
-  return product.bid;
+  return product.bids;
 }
 
 /**
@@ -113,10 +113,10 @@ export function getHighestBid(id: string): u128 {
  *
  * @param id - an identifier of a product to be returned
  */
-export function getHighestBidder(id: string): string {
+export function getBidders(id: string): Array<string> {
   const product = getProduct(id);
   if (product == null) {
     throw new Error("Product not found");
   }
-  return product.bidder;
+  return product.bidders;
 }

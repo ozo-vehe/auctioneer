@@ -25,3 +25,11 @@ export async function withdrawBid({ id }) {
   await window.contract.withdrawBid({ id }, GAS);
   console.log("Withdraw bid...")
 }
+
+export async function getProductBidders({ id }) {
+  return window.contract.getBidders({ id });
+}
+
+export async function getProductBids({ id }) {
+  return window.contract.getBids({ id });
+}
