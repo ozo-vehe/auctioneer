@@ -6,14 +6,14 @@ import BidModal from "./BidModal";
 import ProductDetails from "./ProductDetails";
 
 const Product = ({ product, bid, withdraw }) => {
-  const [showProductDetails, setShowProductDetails] = useState(false);
-  const { id, name, description, sold, image, owner } = product;
+  const { id, name, description, sold, image, owner, created, duration } = product;
+  console.log(product);
   const bidEndTimestamp =
-    Number(product.created) + Number(product.duration) * 60000;
+    Number(created) + Number(duration) * 60000;
   // console.log(bidEndTimestamp, Date.now())
   const time = Math.round((bidEndTimestamp - Date.now()) / 1000 / 60);
   const isEnded = time < 0;
-  const isOwner = product.owner === window.accountId;
+  const isOwner = owner === window.accountId;
 
   const triggerWithdraw = () => {
     withdraw(id);
@@ -23,43 +23,23 @@ const Product = ({ product, bid, withdraw }) => {
     if (isOwner) {
       if (isEnded && !sold) {
         return (
-          <>
-            <Button
-              variant="outline-dark"
-              onClick={triggerWithdraw}
-              className="w-100 py-3"
-            >
-              Withdraw bid
-            </Button>
-            <p
-              style={{ cursor: "pointer" }}
-              onClick={() => setShowProductDetails(!showProductDetails)}
-            >
-              See more
-            </p>
-          </>
+          <Button
+            variant="outline-dark"
+            onClick={triggerWithdraw}
+            className="w-100 py-3"
+          >
+            Withdraw bid
+          </Button>
         );
       }
     } else if (!isOwner) {
       if (!isEnded) {
-        return (
-          <>
-            <BidModal bid={bid} product={product} />
-            <p
-              style={{ cursor: "pointer" }}
-              onClick={() => setShowProductDetails(!showProductDetails)}
-            >
-              See more
-            </p>
-          </>
-        );
+        return <BidModal bid={bid} product={product} />;
       }
     }
   };
 
   return (
-    <>
-      {!showProductDetails ? (
         <Col key={id}>
           <Card className=" h-100">
             <Card.Header>
@@ -95,20 +75,13 @@ const Product = ({ product, bid, withdraw }) => {
             <Card.Body className="d-flex  flex-column text-center">
               <Card.Title>{name}</Card.Title>
               <Card.Text className="flex-grow-1 ">{description}</Card.Text>
-              {bidButton()}
+              <div className="d-flex gap-4 align-items-center justify-content-center">
+                {bidButton()}
+                <ProductDetails product={product} />
+              </div>
             </Card.Body>
           </Card>
         </Col>
-      ) : (
-        <ProductDetails
-          product={product}
-          productDetails={(data) => {
-            console.log(data);
-            setShowProductDetails(data);
-          }}
-        />
-      )}
-    </>
   );
 };
 

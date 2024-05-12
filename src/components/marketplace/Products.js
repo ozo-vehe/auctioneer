@@ -44,13 +44,13 @@ const Products = () => {
   };
 
   const bid = async (id, price) => {
-    console.log("Placing bid...")
+    console.log("Placing bid...");
     try {
       await placeBid({
         id,
         price,
       }).then((resp) => getProducts());
-      console.log("Bid placed successfully")
+      console.log("Bid placed successfully");
       // <NotificationSuccess text="Product bought successfully" />;
     } catch (error) {
       // <NotificationError text="Failed to purchase product." />;
@@ -71,7 +71,7 @@ const Products = () => {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -84,7 +84,7 @@ const Products = () => {
             <h1 className="fs-4 fw-bold mb-0">Street Food</h1>
             <AddProduct save={addProduct} />
           </div>
-          <Row xs={1} sm={2} lg={3} className="g-3  mb-5 g-xl-4 g-xxl-5">
+          <Row xs={1} sm={2} lg={3} className="g-3 mb-5 g-xl-4 g-xxl-5">
             {products.map((_product) => (
               <Product
                 key={_product.id}

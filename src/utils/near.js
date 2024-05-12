@@ -15,18 +15,10 @@ const connectionConfig = {
 
 
 export async function initializeContract() {
-  // const near = await connect(
-  //   Object.assign(
-  //     { keyStore: new keyStores.BrowserLocalStorageKeyStore() },
-  //     nearEnv
-  //   )
-  // );
-  // connect to NEAR
   const nearConnection = await connect(connectionConfig);
-  // console.log(nearConnection)
-  // create wallet connection
   window.walletConnection = new WalletConnection(nearConnection, "mycontract.ozo_vehe.testnet");
   window.accountId = window.walletConnection.getAccountId();
+  console.log(`Account Id: ${window.accountId}`);
   window.contract = new Contract(
     window.walletConnection.account(),
     nearEnv.contractName,
@@ -49,7 +41,7 @@ export async function getAccountId() {
 }
 
 export function login() {
-  // console.log("Login in near")
+  console.log("Login in near")
   return window.walletConnection.requestSignIn({
     contractId: nearEnv.contractName,
   });

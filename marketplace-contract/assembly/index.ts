@@ -80,7 +80,6 @@ export function withdrawBid(id: string): void {
     throw new Error("Product not found");
   }
   const end = (product.created + (U64.parseInt(product.duration) * 60000));
-  const x = (product.created + U64.parseInt(product.duration))
   const now = U64.parseInt((context.blockTimestamp).toString().slice(0, 13))
   // const time = end - now;
   const hasEnded = now > end;
