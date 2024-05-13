@@ -39,17 +39,10 @@ export async function getAccountId() {
 
 export async function login() {
   console.log("Login in near")
-  window.walletConnection.requestSignIn({
+  return window.walletConnection.requestSignIn({
     contractId: nearEnv.contractName,
-    successUrl: window.location.origin,
+    // successUrl: window.location.origin,
   });
-  if(window.walletConnection.isSignedIn()) {
-    // window.location.reload();
-    console.log("Logged in");
-  }
-  else {
-    console.log("Not logged in");
-  }
 }
 
 export function logout() {
