@@ -13,9 +13,14 @@ const Product = ({ product, bid, withdraw }) => {
   // console.log(bidEndTimestamp, Date.now())
   const time = Math.round((bidEndTimestamp - Date.now()) / 1000 / 60);
   const isEnded = time < 0;
-  const isOwner = owner === window.accountId;
+  const isOwner = owner === window.walletConnection.getAccountId();
+  console.log(window.accountId);
 
   const triggerWithdraw = () => {
+    if(product.bid <=0) {
+      alert("No bid to withdraw");
+      return;
+    }
     withdraw(id);
   };
 
@@ -33,6 +38,7 @@ const Product = ({ product, bid, withdraw }) => {
         );
       }
     } else if (!isOwner) {
+      console.log(isOwner)
       if (!isEnded) {
         return <BidModal bid={bid} product={product} />;
       }

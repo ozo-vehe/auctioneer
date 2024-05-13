@@ -4,7 +4,7 @@ import AddProduct from "./AddProduct";
 import Product from "./Product";
 import Loader from "../utils/Loader";
 import { Row } from "react-bootstrap";
-import { NotificationSuccess, NotificationError } from "../utils/Notifications";
+import { NotificationSuccess, NotificationError, Notification } from "../utils/Notifications";
 import {
   getProducts as getProductList,
   placeBid,
@@ -15,6 +15,9 @@ import {
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const getProducts = useCallback(async () => {
     try {
@@ -34,10 +37,8 @@ const Products = () => {
       createProduct(data).then((resp) => {
         getProducts();
       });
-      // <NotificationSuccess text="Product added successfully." />;
     } catch (error) {
       console.log({ error });
-      // <NotificationError text="Failed to create a product." />;
     } finally {
       setLoading(false);
     }
@@ -46,16 +47,19 @@ const Products = () => {
   const bid = async (id, price) => {
     console.log("Placing bid...");
     try {
+      setUploading(true);
       await placeBid({
         id,
         price,
       }).then((resp) => getProducts());
       console.log("Bid placed successfully");
-      // <NotificationSuccess text="Product bought successfully" />;
+      
     } catch (error) {
       // <NotificationError text="Failed to purchase product." />;
+      setError(true);
     } finally {
       setLoading(false);
+      setUploading(false);
     }
   };
 
@@ -80,6 +84,10 @@ const Products = () => {
     <>
       {!loading ? (
         <>
+          {uploading && <Notification text={"uploading product"} />}
+          {success && <NotificationSuccess text={"Bid placed successfully"} />}
+          {error && <NotificationError text={"Failed to purchase product."} />}
+
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h1 className="fs-4 fw-bold mb-0">Street Food</h1>
             <AddProduct save={addProduct} />

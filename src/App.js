@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Container, Nav } from "react-bootstrap";
 import { login, logout as destroy, accountBalance } from "./utils/near";
 import Wallet from "./components/Wallet";
@@ -12,34 +12,23 @@ import Profile from "./components/marketplace/Profile";
 const App = function AppWrapper() {
   const [profile, setProfile] = useState(false);
   const [home, setHome] = useState(true);
-  // let account = useRef(window.walletConnection.account());
-  const account = useRef(window.walletConnection.account());
 
+  const account = window.walletConnection.account();
   const [balance, setBalance] = useState("0");
   const getBalance = useCallback(async () => {
-    if (account.current.accountId) {
+    if (account.accountId) {
       setBalance(await accountBalance());
     }
-  }, []);
-
-  const setAccount = useCallback(async () => {
-    if (account.current.accountId) {
-      account.current = window.walletConnection.account();
-    }
-  }, []);
+  });
 
   useEffect(() => {
     getBalance();
-    const getAccount = async () => {
-      setAccount();
-    };
-    getAccount();
-  }, [getBalance, setAccount]);
+  }, [getBalance]);
 
   return (
     <>
       {/* <Notification /> */}
-      {account.current.accountId ? (
+      {account.accountId ? (
         <Container fluid="md">
           <Nav className="justify-content-end align-items-center gap-4 pt-3 pb-5">
             <Nav.Item>
@@ -68,7 +57,7 @@ const App = function AppWrapper() {
             </Nav.Item>
             <Nav.Item>
               <Wallet
-                address={account.current.accountId}
+                address={account.accountId}
                 amount={balance}
                 symbol="NEAR"
                 destroy={destroy}
@@ -76,7 +65,7 @@ const App = function AppWrapper() {
             </Nav.Item>
           </Nav>
           <main>
-            {profile && <Profile user={account.current.accountId} />}
+            {profile && <Profile user={account.accountId} />}
             {home && <Products />}
           </main>
         </Container>
